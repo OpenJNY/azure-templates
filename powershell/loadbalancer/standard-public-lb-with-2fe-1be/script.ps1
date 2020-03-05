@@ -4,7 +4,7 @@ $DEPLOY_VM = $false
 # Resource Group
 # --------------
 
-$rgName = "outbound-rules-with-different-idletimeouts"
+$rgName = "sample-rg"
 $location = "japaneast"
 $rg = New-AzResourceGroup -Name $rgName -Location $location
 
@@ -34,7 +34,7 @@ if ($DEPLOY_VM -eq $true) {
 # -------------
 
 # Create a backend pool
-$bepoolName = "backend-pool"
+$bepoolName = "backendpool-1"
 $bepool = New-AzLoadBalancerBackendAddressPoolConfig -Name $bepoolName
 
 # Create Public IP addresses
@@ -44,8 +44,8 @@ $pip1 = New-AzPublicIpAddress -Name $pipName1 -ResourceGroupName $rgName -Alloca
 $pip2 = New-AzPublicIpAddress -Name $pipName2 -ResourceGroupName $rgName -AllocationMethod Static -Sku Standard -Location $location
 
 # Create frontends corresponding to the PIPs
-$frontendName1 = "fe1"
-$frontendName2 = "fe2"
+$frontendName1 = "frontend-1"
+$frontendName2 = "frontend-2"
 $frontend1 = New-AzLoadBalancerFrontendIPConfig -Name $frontendName1 -PublicIpAddress $pip1
 $frontend2 = New-AzLoadBalancerFrontendIPConfig -Name $frontendName2 -PublicIpAddress $pip2
 
@@ -80,4 +80,4 @@ Write-Output (Get-AzLoadBalancer -Name $lbName -ResourceGroupName $rgName | Get-
 # Remove-AzPublicIpAddress -Name $pipName1 -ResourceGroupName $RgName -Force -AsJob
 # Remove-AzPublicIpAddress -Name $pipName2 -ResourceGroupName $RgName -Force -AsJob
 
-Remove-AzResourceGroup -ResourceGroupName $rgName1
+Remove-AzResourceGroup -ResourceGroupName $rgName
